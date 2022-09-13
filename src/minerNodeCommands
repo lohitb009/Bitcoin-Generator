@@ -1,0 +1,26 @@
+PS D:\UF STuff\Fall 2022\distributedOperatingSystem\learnEarlang\src> erl -name Miner@127.0.0.1 -setCookie lohit
+Eshell V13.0.4  (abort with ^G)
+(Miner@127.0.0.1)1> net_kernel:connect_node('Worker@127.0.0.1').
+PS D:\UF STuff\Fall 2022\distributedOperatingSystem\learnEarlang\src> erl -name Miner@127.0.0.1 -setCookie lohit
+Eshell V13.0.4  (abort with ^G)
+(Miner@127.0.0.1)1> net_kernel:connect_node('Worker@127.0.0.1').
+true
+PS D:\UF STuff\Fall 2022\distributedOperatingSystem\learnEarlang\src> erl -name Miner@127.0.0.1 -setCookie lohit
+PS D:\UF STuff\Fall 2022\distributedOperatingSystem\learnEarlang\src> erl -name Miner@127.0.0.1 -setCookie lohit
+Eshell V13.0.4  (abort with ^G)
+(Miner@127.0.0.1)1> register(miner,self()).
+true
+(Miner@127.0.0.1)2> net_kernel:connect_node('Worker@127.0.0.1').
+true
+(Miner@127.0.0.1)3> c(minerProcess).
+{ok,minerProcess}
+(Miner@127.0.0.1)4> ReceivedWorkerPid = minerProcess:receiveWorkerPid().
+<9189.121.0>
+(Miner@127.0.0.1)5> ReceivedWorkerPid.
+<9189.121.0>
+(Miner@127.0.0.1)6> ReceivedWorkerPid ! {mine,self(),4}.
+{mine,<0.85.0>,4}
+(Miner@127.0.0.1)7> flush().
+Shell got {ok,"lohitBhambri;KsZ1/UTv1ak="}
+ok
+(Miner@127.0.0.1)8>

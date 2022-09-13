@@ -1,0 +1,29 @@
+PS D:\UF STuff\Fall 2022\distributedOperatingSystem\assignments\Bitcoin-Generator\src> erl -name Worker@127.0.0.1
+Eshell V13.0.4  (abort with ^G)
+(Worker@127.0.0.1)1> erlang:set_cookie('lohit').
+true
+(Worker@127.0.0.1)2> erlang:get_cookie().
+lohit
+(Worker@127.0.0.1)3> nodes().
+['Miner@127.0.0.1']
+(Worker@127.0.0.1)4> c(cryptoWorker).
+{ok,cryptoWorker}
+(Worker@127.0.0.1)5> {ok,WorkerPid} = cryptoWorker:start_link().
+Worker Started at Pid <0.98.0>
+PS D:\UF STuff\Fall 2022\distributedOperatingSystem\assignments\Bitcoin-Generator\src> erl -name Worker@127.0.0.1
+Eshell V13.0.4  (abort with ^G)
+(Worker@127.0.0.1)1> erlang:set_cookie('india').
+true
+(Worker@127.0.0.1)2> erlang:get_cookie().
+india
+(Worker@127.0.0.1)3> nodes().
+['Miner@127.0.0.1']
+(Worker@127.0.0.1)4> c(cryptoWorker).
+{ok,cryptoWorker}
+(Worker@127.0.0.1)5> {ok,WorkerPid} = cryptoWorker:start_link().
+Worker Started at Pid <0.98.0>
+{ok,<0.98.0>}
+(Worker@127.0.0.1)6> {minerLohit, 'Miner@127.0.0.1'} ! {worker,WorkerPid}.
+{worker,<0.98.0>}
+(Worker@127.0.0.1)7> Input String's "lohitBhambri;kq+VjE69lyQ=" hashed result is "00df0d9a794babb69fe88d2f4231494b6920a59f6206cba7033c32d35508169c"
+(Worker@127.0.0.1)7>
