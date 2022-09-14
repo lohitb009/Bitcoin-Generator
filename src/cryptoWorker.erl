@@ -68,3 +68,4 @@ hashInput(CollectorId,LeadingZeros) ->
     _ ->
       hashInput(CollectorId,LeadingZeros)
   end.
+
