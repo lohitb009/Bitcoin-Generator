@@ -1,0 +1,8 @@
+1. Get System IP Command
+    a. Open Powershell
+    b. $ips = [System.Net.Dns]::GetHostAddresses("hostname") -- my system name
+    c. echo $ips
+
+2. Get Hostname Command
+    a. Open Powershell
+    b. hostname
