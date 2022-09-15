@@ -17,14 +17,14 @@
 start_link() ->
   %%% spawn_link the client with worker
   WorkerPid = spawn_link(?MODULE,main_loop,[]),
-  io:format("Worker Started at Pid ~p ~n",[WorkerPid]),
-  register(?MODULE,WorkerPid),
+  io:format("Worker Pid is ~p ~n",[WorkerPid]),
   {ok,WorkerPid}.
 
 %%% ==== Internal APIs not to be exposed
 main_loop() ->
   receive
     {mine,CollectorId,LeadingZeros} ->
+      %%% io:format("Collector Id ~p ~n",[CollectorId]),
       hashInput(CollectorId,LeadingZeros);
 
     terminate ->
@@ -61,11 +61,8 @@ hashInput(CollectorId,LeadingZeros) ->
 
   case matchString(Prefix,LeadingZeros) of
     true ->
-      io:format("Input String's ~p hashed result is ~p ~n",[InputString, Integer]),
-      CollectorId ! {ok,InputString,Integer},
-      %%% Start the main loop again
-      main_loop();
+      %%% io:format("Input String's ~p hashed result is ~p ~n",[InputString, Integer]),
+      CollectorId ! {ok,CollectorId,InputString,Integer};
     _ ->
       hashInput(CollectorId,LeadingZeros)
   end.
-

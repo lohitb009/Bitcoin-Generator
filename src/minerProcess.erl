@@ -4,13 +4,11 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 14. Sep 2022 12:28 am
+%%% Created : 12. Sep 2022 10:36 am
 %%%-------------------------------------------------------------------
+
 -module(minerProcess).
 -author("lohit").
-
-%% API
--export([]).
 
 %% API
 -export([start_link/0]).

@@ -4,20 +4,35 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 14. Sep 2022 12:27 am
+%%% Created : 13. Sep 2022 08:25 pm
 %%%-------------------------------------------------------------------
 -module(forLoop).
 -author("lohit").
 
 %% API
--export([forLoop/2]).
+-export([forLoop/3]).
 
-forLoop(0,_) ->
+receiveMinerPid(HeadProcessId,ForLoopPid) ->
+  HeadProcessId ! {ok,ForLoopPid,needMinerId},
+  receive
+    {ok,MinerPid} ->
+      {ok,MinerPid}
+  end.
+
+forLoop(_,0,_) ->
   io:format("Done");
+forLoop(HeadProcessId,Count,LeadingZeros) ->
 
-forLoop(Count,LeadingZeros) ->
   %%% Spawn the miners
-  {ok,MinerPid} = minerProcess_old:start_link(),
+
+  %%%% 1. Send the message to headProcess ---- headPid ! {ok,self(),needMinerId} --- then wait for async call --- receive {ok,forLoopId,MinerPid}
+  %%%% 2. headProcess will spawn a minerProcess and send the MinerPid to forLoop --- forLoopPid ! {ok,MinerPid}
+  %%%$ 3. once the forLoopPid get the MinerPid and continueProcess
+  %%%% 4. {ok,MinerPid} = receiveMinerPid(self())
+
+  {ok,MinerPid} = receiveMinerPid(HeadProcessId,self()),
+
+  %%%% {ok,MinerPid} = minerProcess:start_link(),
 
   %%% Spawn the worker
   {ok,WorkerPid} = cryptoWorker:start_link(),
@@ -28,4 +43,4 @@ forLoop(Count,LeadingZeros) ->
   %%% Sleep for 1 secs
   %%% timer:sleep(1000),
 
-  forLoop(Count-1,LeadingZeros).
+  forLoop(HeadProcessId,Count-1,LeadingZeros).
