@@ -1,5 +1,8 @@
 
-# Distributed Bitcoin Mining Using Erlang
+## <u>Distributed Bitcoin Mining Using Erlang</u>
+##### <i>Lohit Bhambri(lohit.bhambri@ufl.edu)</i> 
+##### <i>Imthiaz Hussain (imthiazh.hussain@ufl.edu)</i>
+
 
 The goal of this project is to use Erlang and
 the Actor Model to build a distributed solution to
