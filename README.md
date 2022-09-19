@@ -696,11 +696,13 @@ MinerPid is <0.29543.4>
 
 3. Ratio of CPU time to Real Time for above execution
 
-CPU Time When Last Coin was mined : 1027484 (from above pics)
-Real Time When Last Coin was mined : 19889228
+CPU Time When Last Coin was mined : 1027484 milliseconds (from above pics)
 
-Initial CPU Time: 936203
-Initial Real Time: 19876196
+Real Time When Last Coin was mined : 19889228 milliseconds
+
+Initial CPU Time: 936203 milliseconds
+
+Initial Real Time: 19876196 milliseconds
 
 Ratio = result=(final_cpu-init_cpu)/(final_real-init_real)
 
