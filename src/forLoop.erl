@@ -10,7 +10,7 @@
 -author("lohit").
 
 %% API
--export([forLoop/3]).
+-export([startMining/3]).
 
 receiveMinerPid(HeadProcessId,ForLoopPid) ->
   HeadProcessId ! {ok,ForLoopPid,needMinerId},
@@ -19,8 +19,19 @@ receiveMinerPid(HeadProcessId,ForLoopPid) ->
       {ok,MinerPid}
   end.
 
+startMining(HeadProcessId,Count,LeadingZeros) ->
+  {InitRealTime,_} = statistics(wall_clock),
+  {InitCPUTime,_} =statistics(runtime),
+  io:format("Initial Real Time is ~p milliseconds ~n",[InitRealTime]),
+  io:format("Initial CPU time is ~p milliseconds ~n",[InitCPUTime]),
+
+%%  io:format("Initial wall clock is ~p ~n",[statistics(wall_clock)]),
+%%  io:format("Initial CPU time is ~p ~n",[statistics(runtime)]),
+  forLoop(HeadProcessId,Count,LeadingZeros).
+
+
 forLoop(_,0,_) ->
-  io:format("Done");
+  io:format("Finished spawning processes ~n");
 forLoop(HeadProcessId,Count,LeadingZeros) ->
 
   %%% Spawn the miners
@@ -30,6 +41,8 @@ forLoop(HeadProcessId,Count,LeadingZeros) ->
   %%%$ 3. once the forLoopPid get the MinerPid and continueProcess
   %%%% 4. {ok,MinerPid} = receiveMinerPid(self())
 
+
+
   {ok,MinerPid} = receiveMinerPid(HeadProcessId,self()),
 
   %%%% {ok,MinerPid} = minerProcess:start_link(),
@@ -38,7 +51,8 @@ forLoop(HeadProcessId,Count,LeadingZeros) ->
   {ok,WorkerPid} = cryptoWorker:start_link(),
 
   %%% Send the message
-  WorkerPid ! {mine,MinerPid,LeadingZeros},
+  WorkerPid ! {mine,MinerPid,LeadingZeros,Count},
+
 
   %%% Sleep for 1 secs
   %%% timer:sleep(1000),
