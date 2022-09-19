@@ -23,9 +23,9 @@ start_link() ->
 %%% ==== Internal APIs not to be exposed
 main_loop() ->
   receive
-    {mine,CollectorId,LeadingZeros,Count} ->
+    {mine,CollectorId,LeadingZeros,CoinsReq} ->
       %%% io:format("Collector Id ~p ~n",[CollectorId]),
-      hashInput(CollectorId,LeadingZeros,Count);
+      hashInput(CollectorId,LeadingZeros,CoinsReq);
 
 
     terminate ->
@@ -41,12 +41,17 @@ matchString([Head|Tail],LeadingZeros) ->
     _ -> false
   end.
 
-hashInput(CollectorId,LeadingZeros,Count) ->
+hashInput(CollectorId,LeadingZeros,0) ->
 
-%%  io:format("Wallclock time is ~p ~n",[erlang:trace(all, true, [timestamp])]),
-%%  statistics(runtime),
-%%  statistics(wall_clock),
-%%  io:format("Initial wall clock is ~p ~n",[erlang:now()]),
+  io:format("Done - found all coins~n");
+%%  CollectorId ! {status, 0};
+%%  CollectorId ! {ok,CollectorId,"I have finished"," ",0};
+
+hashInput(CollectorId,LeadingZeros,CoinsReq) ->
+%%  io:format("Coinsreq is: ~p ~n",[CoinsReq]),
+%%  CollectorId ! {ok,CollectorId,"I have started"," ",CoinsReq},
+%%  io:format("I have started, coins req are ~p ~n",[CoinsReq]), IMP
+%%  io:format("~n"), IMP
 
   %%% Generate a random string
   RandomStr = base64:encode(crypto:strong_rand_bytes(8)),
@@ -63,26 +68,24 @@ hashInput(CollectorId,LeadingZeros,Count) ->
   %%% io:format("Hashed Integer is: ~p ~n",[Integer]),
 
   Prefix = string:left(Integer,LeadingZeros),
+  %%% IMPORTANT : ONLY EXACTLY LEADING ZEROES
   %%% io:format("Prefix is: ~p ~n",[Prefix]),
+
+%%  CollectorId ! {ok,CollectorId,"Before entering function"," ",CoinsReq},
+%%  io:format("Before entering function, coins req are ~p ~n",[CoinsReq]), IMP
+%%  io:format("~n"), IMP
 
   case matchString(Prefix,LeadingZeros) of
     true ->
-%%      {_, CPUTime} = statistics(runtime), IMP
-%%      {_, RealTime} = statistics(wall_clock), IMP
-      {CPUTime, _} = statistics(runtime),
-      {RealTime, _} = statistics(wall_clock),
-      %%% io:format("Input String's ~p hashed result is ~p ~n",[InputString, Integer]),
-%%      io:format("Final wall clock is ~p ~n",[erlang:trace(all, true, [timestamp] )]),
-%%      io:format("Final wall clock is ~p ~n",[erlang:now()]),
-%%      if
-%%        io:format("Coin# ~p CPU Time taken for execution: ~p milliseconds ~n",[CPUTime]), imp
-%%          io:format("Coin# ~p Real Time taken for execution: ~p millisecondds~n",[RealTime]), imp
-      io:format("Coin# ~p Current Total CPU Time: ~p milliseconds ~n",[Count, CPUTime]),
-      io:format("Coin# ~p Current Total Real Time: ~p milliseconds ~n",[Count, RealTime]),
-%%          io:format("Ratio of CPU Time to Real Time: ~p ~n",[CPUTime/RealTime]);
-%%        true -> ok
-%%      end,
-      CollectorId ! {ok,CollectorId,InputString,Integer};
-    _ ->
-      hashInput(CollectorId,LeadingZeros,Count)
+      io:format("Input String's ~p hashed result is ~p ~n",[InputString, Integer]),
+%%      CollectorId ! {ok,CollectorId,InputString,Integer,CoinsReq-1},
+%%      CollectorId ! {status, CoinsReq-1},
+      hashInput(CollectorId,LeadingZeros,CoinsReq-1);
+%%      IMP START
+%%      io:format("After finish of function, coins req are ~p ~n",[CoinsReq]),
+%%      io:format("~n");
+%%    IMP STOP
+%%      CollectorId ! {ok,CollectorId,"After finish of function"," ",CoinsReq-1};
+    false ->
+      hashInput(CollectorId,LeadingZeros,CoinsReq)
   end.
