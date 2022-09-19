@@ -7,7 +7,7 @@ the Actor Model to build a distributed solution to
 
 ## Architecture Diagram
 
-![Alt text](imgs_readme/arch.png?raw=true "Architecture")
+![Alt text](imgs_readme/Arch.png?raw=true "Architecture")
 
 ## How to Run Project
 
