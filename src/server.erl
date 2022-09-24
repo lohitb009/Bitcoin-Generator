@@ -19,12 +19,8 @@ main_loop(Count, LeadingZeros, Curr_Count) ->
           io:format("---------"),
           io:format("Coin #~p Mined! ~n",[Curr_Count]),
 
-          %%            If Node number in PID is >= 1, then it is a worker process (external node)
-          %%   If Node number in PID is =0 , then it is the master itself
-          if
-            N>0 -> io:format("Mined by Process PID : ~p (Worker from Other Node)~n",[Coin_Origin]);
-            N==0 -> io:format("Mined by Process PID : ~p (Supervisor)~n",[Coin_Origin])
-          end,
+%%          The miner PID can be used to see if coin came from master or worker. The worker's and master's PIDs are printed in their respective terminal.
+          io:format("Mined by Process PID : ~p ~n",[Coin_Origin]),
           io:format("Mined ~p hashed result is ~p ~n",[InputString, Integer]),
           io:format("~n"),
           io:format("~n"),
@@ -69,8 +65,9 @@ start_process(Count,LeadingZeros) ->
 %%  allow workers to connect at start/ midway of mining
   Server_PID = spawn_link(?MODULE,main_loop,[Count, LeadingZeros, 1]),
   io:format("The local process ID for workers to connect : ~p. ~n",[Server_PID]),
-  io:format("Please note the above. Waiting for 15 seconds before starting mining. Workers may connect mid-way while mining. ~n"),
-  timer:sleep(15000),
+  io:format("The PID of Master is : ~p. ~n",[self()]),
+  io:format("Please note the above. Waiting for 25 seconds before starting mining. Workers may connect mid-way while mining. ~n"),
+  timer:sleep(25000),
 
 %%  #starting mining at master
   statistics(wall_clock),
