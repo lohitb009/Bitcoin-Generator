@@ -1,12 +1,3 @@
-%%%-------------------------------------------------------------------
-%%% @author lohit
-%%% @copyright (C) 2022, <COMPANY>
-%%% @doc
-%%%
-%%% @end
-%%% Created : 12. Sep 2022 10:36 am
-%%%-------------------------------------------------------------------
-
 -module(minerProcess).
 -author("lohit").
 
@@ -14,13 +5,11 @@
 -export([start_link/0]).
 -export([main_loop/0]).
 
-%%% register(?MODULE,SupervisorPid)
 
 %%%% ==== Expose the API to client
 start_link() ->
   %%% spawn_link the client with worker
   MinerPid = spawn_link(?MODULE,main_loop,[]),
-  %%% io:format("Miner Pid is ~p ~n",[MinerPid]),
   {ok,MinerPid}.
 
 %%% ==== Internal APIs not to be exposed
