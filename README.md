@@ -16,8 +16,8 @@ the Actor Model to build a distributed solution to
 
 1. Size of the work unit that resulted in the best performance:
 
-The size of work unit that achieved maximum performance was any value above 5. The performance characteristic used was the ratio of CPU time to real time.
-For 100 coins to mine, various work unit values were given and tested. Finally, a work unit of 8 was selected as the machines used for testing are provided with 8 processors. When a worker was tasked with 8 coins to mine, it would spawn 8 miner processes. Hence, matching the processors and the work unit  would enable a complete and efficient use of CPU resources (without any queueing delays at the processors). Once a worker in the other machine/terminal finishes the task, it is assigned another work unit of tasks.
+For 100 coins to mine, various work unit values were given and tested.The size of work unit that achieved maximum performance was any value above 5. The performance characteristic used was the ratio of CPU time to real time.
+ Finally, a work unit of 8 was selected as the machines used for testing are provided with 8 processors. When a worker was tasked with 8 coins to mine, it would spawn 8 miner processes. Hence, matching the processors and the work unit  would enable a complete and efficient use of CPU resources (without any queueing delays at the processors). This process parallellism adds on to the efficiency of distributed mining. Once a worker in the other machine/terminal finishes the task, it is assigned another work unit of tasks.
 
 ![Alt text](imgs_readme/1.1.png?raw=true "Architecture")
 
@@ -652,12 +652,6 @@ ok
 (worker@127.0.0.1)2> Server_PID = <8850.5695.0>.            
 <8850.5695.0>
 (worker@127.0.0.1)3> worker:main_loop(join, 4, Server_PID).
-Finished spawning processes 
-Finished spawning processes 
-Finished spawning processes 
-...
-...
-Finished spawning processes ...
 
 ```
 
