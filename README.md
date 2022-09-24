@@ -274,7 +274,7 @@ Final CPU time is 29750 milliseconds
 
 The final ratio is 3.412871400711254
 
-However, in some executions with varying inputs, ratios around 7 were achieved.
+However, in some executions with varying inputs (eg. 1 or 2 leading zeroes), ratios around 7 were achieved.
 
 
 4. Coin with the most 0s found
