@@ -1,0 +1,13 @@
+%%joiner/2
+
+%%joiner(Server_print, LeadingZeros) ->
+%%  receive
+%%    {trial} -> io:format("Trial worked ~n"); ssda
+%%    {join, Worker_id} ->
+%%      io:format("Worker has joined~n"),
+%%      Worker_id ! {go_mine, Server_print, LeadingZeros},
+%%      joiner(Server_print, LeadingZeros)
+%%  end.
+
+%%  Joiner = spawn_link(?MODULE,joiner,[Server_print, LeadingZeros]),
+%%  io:format("The joiner pid is : ~p ~n",[Joiner]),
